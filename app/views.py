@@ -17,7 +17,7 @@ async def post(request):
     body = request.match_info.get('body', "Anonymous")
     print(clients)
     for client in clients:
-        await client.send_json({'type': 'message', 'data': {'body': 'zz'}})
+        await client.send_json({'type': 'message', 'data': {'body': 'zz', 'name': 'kot', 'country': 'PL-77'}})
     return web.Response(text='ok')
 
 
@@ -29,7 +29,7 @@ async def websocket(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     clients.add(ws)
-    await ws.send_json({'type': 'message', 'data': {'body': '11'}})
+    await ws.send_json({'type': 'message', 'data': {'body': '11', 'country': 'RU-48'}})
 
     # WARNING: ws.__aiter__ is vulnerable to spam!
     # t. ncat Tue 16 Apr 2019 09:23:11 AM UTC
@@ -38,7 +38,7 @@ async def websocket(request):
             data = json.loads(msg.data)
             print(data)
             for client in clients:
-                await client.send_json({'type': 'message', 'data': {'body': data['body']}})
+                await client.send_json({'type': 'message', 'data': {'body': data['body'], 'country': 'RU-48', 'name': 'kot'}})
         elif msg.type == aiohttp.WSMsgType.ERROR:
             print('ws connection closed with exception %s' %
                   ws.exception())

@@ -9,8 +9,10 @@ var chat = new Vue({
     computed: {
         messages_full: function(){
             this.messages.forEach(function(message, index) {
-                message.country_icon = '/static/icons/countries/'+message.country.split('-')[0]+'.png';
-                message.region_icon = '/static/icons/countries/'+message.country+'.png';
+                if(message.country) {
+                    message.country_icon = '/static/icons/countries/' + message.country.split('-')[0] + '.png';
+                    message.region_icon = '/static/icons/countries/' + message.country + '.png';
+                }
             })
         }
     }
@@ -21,6 +23,9 @@ window.onload = function() {
         // Web Socket is connected, send data using send()
         // ws.send("Message to send");
         // alert("Message is sent...");
+            ws.send(JSON.stringify({
+  body: "aaaa"
+}));
     };
     ws.onmessage = function (event) {
         var message = JSON.parse(event.data);
@@ -33,8 +38,6 @@ window.onload = function() {
     ws.onclose = function () {
 
     }
-    ws.send(JSON.stringify({
-  body: "aaaa"
-}));
+
 
 }

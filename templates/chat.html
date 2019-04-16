@@ -1,7 +1,7 @@
 <div id="chat">
   <ol>
-    <div class="message" v-for="message in messages">
-        <p><img src="{{ message.country_icon }}"><img src="{{ message.region_icon }}">{{ message.name }}</p>
+    <div class="message" v-for="message in messages_full">
+        <p><img :src="message.country_icon"><img :src="message.region_icon">{{ message.name }}</p>
         <p>{{ message.body }}</p>
     </div>
   </ol>
