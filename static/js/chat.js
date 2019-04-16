@@ -16,7 +16,7 @@ var chat = new Vue({
     }
 });
 window.onload = function() {
-    var ws = new WebSocket("ws://localhost:8080/ws");
+    var ws = new WebSocket("ws://localhost:8888/ws");
     ws.onopen = function () {
         // Web Socket is connected, send data using send()
         // ws.send("Message to send");

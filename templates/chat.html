@@ -1,8 +1,9 @@
 <div id="chat">
   <ol>
-    <li v-for="message in messages">
-      {{ message.body }}
-    </li>
+    <div class="message" v-for="message in messages">
+        <p><img src="{{ message.country_icon }}"><img src="{{ message.region_icon }}">{{ message.name }}</p>
+        <p>{{ message.body }}</p>
+    </div>
   </ol>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

@@ -6,7 +6,6 @@ import json
 
 async def index_handler(request):
     return web.FileResponse('templates/chat.html')
-    return web.Response(body=open('templates/chat.html').read(), content_type="text/html")
 
 
 async def post_handler(request):
