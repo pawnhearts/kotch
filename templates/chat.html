@@ -1,0 +1,15 @@
+<div id="chat">
+  <ol>
+    <li v-for="message in messages">
+      {{ message.body }}
+    </li>
+  </ol>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="/static/js/chat.js"></script>
+<form method="post" action="/post" target="_blank">
+  <input name="name">
+  <textarea name="body">
+  </textarea>
+  <input type="submit" value="post">
+</form>
