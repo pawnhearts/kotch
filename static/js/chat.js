@@ -37,9 +37,6 @@ window.onload = function () {
         // Web Socket is connected, send data using send()
         // ws.send("Message to send");
         // alert("Message is sent...");
-        ws.send(JSON.stringify({
-            body: "aaaa"
-        }));
     };
     ws.onmessage = function (event) {
         var message = JSON.parse(event.data);
@@ -83,30 +80,4 @@ window.onload = function () {
 
     }
 
-}
-
-function post(form) {
-    var data = {body: form.body.value, name: form.name.value};
-    console.log(data);
-    Vueajax.post("/post", data, {
-        fileInputs: [
-            document.getElementById("file")
-        ]
-    });
-    return false;
-}
-
-function uploadFile(files) {
-
-        file = document.getElementById('file').files[0]
-        var reader = new FileReader()
-        var rawData = new ArrayBuffer();
-        reader.onloadend = function (e) {
-            rawData = e.target.result;
-
-            var data = { body:'aa',name:'aa', file: rawData}
-            console.log(data)
-            ws.send(JSON.stringify(data))
-        }
-        reader.readAsArrayBuffer(file);
 }
