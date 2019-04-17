@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 aiohttp = "*"
 aiohttp-devtools = "*"
+marshmallow = "*"
 
 [requires]
 python_version = "3.7"

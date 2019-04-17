@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 
 import aiohttp
 from aiohttp import web
@@ -7,7 +8,7 @@ from aiohttp.web import json_response
 from aiohttp.web_exceptions import HTTPFound
 import asyncio
 
-import json
+from .models import MessageSchema
 
 
 async def index(app, request):
@@ -16,6 +17,8 @@ async def index(app, request):
 
 async def post(app, request):
     data = await request.post()
+    schema = MessageSchema()
+    data = schema.load(data)
     name = data.get('name')
     body = data.get('body')
     file = data.get('file')
@@ -25,7 +28,7 @@ async def post(app, request):
 
     message = {'body': body, 'name': name, 'file': file and file.filename, 'country': 'PL-77'}
     for client in clients:
-        await client.send_json({'type': 'message', 'data': message})
+        await client.send_json(schema.dump_message(message))
     app.messages.append(message)
     app.messages = app.messages[-100:]
     return web.Response(text='ok')
@@ -39,8 +42,9 @@ async def websocket(app, request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     clients.add(ws)
+    schema = MessageSchema()
     for message in app.messages:
-        await ws.send_json({'type': 'message', 'data': message})
+        await ws.send_json(schema.dump_message(message))
 
     async for msg in ws:
         if msg.type == aiohttp.WSMsgType.TEXT:

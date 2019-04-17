@@ -20,6 +20,7 @@ class Settings:
     """
     _ENV_PREFIX = 'APP_'
     MESSAGE_FILE = Path('./messages.txt')
+    SALT = 'dagfsdgadsg'
 
     def __init__(self, **custom_settings):
         """
