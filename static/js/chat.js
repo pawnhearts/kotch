@@ -30,8 +30,9 @@ var chat = new Vue({
     },
     computed: {}
 });
+var ws;
 window.onload = function () {
-    var ws = new WebSocket("ws://localhost:8888/ws");
+    ws = new WebSocket("ws://localhost:8888/ws");
     ws.onopen = function () {
         // Web Socket is connected, send data using send()
         // ws.send("Message to send");
@@ -42,7 +43,6 @@ window.onload = function () {
     };
     ws.onmessage = function (event) {
         var message = JSON.parse(event.data);
-        console.log(message)
         if (message.type == 'message') {
             chat.messages.push(message.data);
         }
@@ -67,8 +67,8 @@ window.onload = function () {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/post', true);
         xhr.upload.onprogress = function (e) {
-            console.log(e)
-            // update_progress(e);
+            var percentage = Math.round((e.loaded / e.total) * 100);
+            console.log(percentage);
         }
         xhr.onload = function (e) {
             form.post.disabled=false
@@ -82,18 +82,6 @@ window.onload = function () {
 
     }
 
-    function update_progress(e) {
-        if (e.lengthComputable) {
-            var percentage = Math.round((e.loaded / e.total) * 100);
-            progress.value = percentage;
-            uploadButton.innerHTML = 'Upload ' + percentage + '%';
-            console.log("percent " + percentage + '%');
-        } else {
-            console.log("Unable to compute progress information since the total size is unknown");
-        }
-    }
-
-
 }
 
 function post(form) {
@@ -105,4 +93,19 @@ function post(form) {
         ]
     });
     return false;
+}
+
+function uploadFile(files) {
+
+        file = document.getElementById('file').files[0]
+        var reader = new FileReader()
+        var rawData = new ArrayBuffer();
+        reader.onloadend = function (e) {
+            rawData = e.target.result;
+
+            var data = { body:'aa',name:'aa', file: rawData}
+            console.log(data)
+            ws.send(JSON.stringify(data))
+        }
+        reader.readAsArrayBuffer(file);
 }

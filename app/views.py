@@ -18,9 +18,13 @@ async def post(request):
     data = await request.post()
     name = data.get('name')
     body = data.get('body')
-    print(clients)
+    file = data.get('file')
+    if file:
+        with open('static/uploads/{}'.format(file.filename), 'wb') as f:
+            f.write(file.file.read())
+
     for client in clients:
-        await client.send_json({'type': 'message', 'data': {'body': body, 'name': name, 'country': 'PL-77'}})
+        await client.send_json({'type': 'message', 'data': {'body': body, 'name': name, 'file': file.filename, 'country': 'PL-77'}})
     return web.Response(text='ok')
 
 

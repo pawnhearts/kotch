@@ -4,6 +4,9 @@
         <div class="header"><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img v-if="message.country.indexOf('-') !== -1"
  v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}</div>
         <div class="body">{{ message.body }}</div>
+        <div v-if="message.file">
+            <img v-bind:src="'/static/uploads/'+message.file">
+        </div>
     </div>
   </ol>
 </div>
