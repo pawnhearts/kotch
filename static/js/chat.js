@@ -4,17 +4,10 @@ var chat = new Vue({
 	    messages: [
 		    {body:'test', name:'kot', country:'PL-77', 	country_name:'Poland', count:1, date:"2019-04-09T00:48:58.000Z"},
             {body:'test', name:'kot', country:'PL-77', 	country_name:'Poland', count:1, date:"2019-04-09T00:48:58.000Z"},
+            {body:'test', name:'kot', country:'RU', 	country_name:'Poland', count:1, date:"2019-04-09T00:48:58.000Z"},
 	    ]
     },
     computed: {
-        messages_full: function(){
-            this.messages.forEach(function(message, index) {
-                if(message.country) {
-                    message.country_icon = '/static/icons/countries/' + message.country.split('-')[0] + '.png';
-                    message.region_icon = '/static/icons/countries/' + message.country + '.png';
-                }
-            })
-        }
     }
 });
 window.onload = function() {

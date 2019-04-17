@@ -1,7 +1,8 @@
 <div id="chat">
   <ol>
-    <div class="message" v-for="message in messages_full">
-        <p><img :src="message.country_icon"><img :src="message.region_icon">{{ message.name }}</p>
+    <div class="message" v-for="message in messages">
+        <p><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img v-if="message.country.indexOf('-') !== -1"
+ v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}</p>
         <p>{{ message.body }}</p>
     </div>
   </ol>
