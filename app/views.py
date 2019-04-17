@@ -7,17 +7,20 @@ from aiohttp.web import json_response
 from aiohttp.web_exceptions import HTTPFound
 import asyncio
 
+import json
+
 
 async def index(request):
     return web.FileResponse('templates/chat.html')
 
 
 async def post(request):
-    name = request.match_info.get('name', "Anonymous")
-    body = request.match_info.get('body', "Anonymous")
+    data = await request.post()
+    name = data.get('name')
+    body = data.get('body')
     print(clients)
     for client in clients:
-        await client.send_json({'type': 'message', 'data': {'body': 'zz', 'name': 'kot', 'country': 'PL-77'}})
+        await client.send_json({'type': 'message', 'data': {'body': body, 'name': name, 'country': 'PL-77'}})
     return web.Response(text='ok')
 
 

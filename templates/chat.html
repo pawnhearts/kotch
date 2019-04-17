@@ -1,17 +1,18 @@
 <div id="chat">
   <ol>
     <div class="message" v-for="message in messages">
-        <p><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img v-if="message.country.indexOf('-') !== -1"
- v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}</p>
-        <p>{{ message.body }}</p>
+        <div class="header"><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img v-if="message.country.indexOf('-') !== -1"
+ v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}</div>
+        <div class="body">{{ message.body }}</div>
     </div>
   </ol>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="/static/js/chat.js"></script>
-<form method="post" action="/post" target="_blank">
+<form method="post" action="/post" target="_blank" name="post" id="post">
+    <input name="file" type="file" id="file">
   <input name="name">
   <textarea name="body">
   </textarea>
-  <input type="submit" value="post">
+  <input type="submit" value="post" name="post" id="post">
 </form>
