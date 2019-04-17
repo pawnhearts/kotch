@@ -10,14 +10,15 @@
     </div>
   </ol>
 </div>
+<div id="postform">
+    <iframe style="visibility:hidden;" id="posttarget" name="posttarget"></iframe>
+    <form method="post" action="/post" target="posttarget" name="post" id="post">
+        <input name="file" type="file" id="file">
+        <input name="name">
+        <textarea name="body"></textarea>
+        <input type="submit" value="post" name="post" id="post">
+    </form>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="/static/js/reconnecting-websocket.min.js"></script>
 <script src="/static/js/chat.js"></script>
-<iframe style="visibility:hidden;" id="posttarget" name="posttarget"></iframe>
-<form method="post" action="/post" target="posttarget" name="post" id="post">
-    <input name="file" type="file" id="file">
-  <input name="name">
-  <textarea name="body">
-  </textarea>
-  <input type="submit" value="post" name="post" id="post">
-</form>
