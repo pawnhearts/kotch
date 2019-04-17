@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, pprint
+from marshmallow import Schema, fields, validate
 import hashlib
 from .settings import Settings
 
@@ -14,6 +14,7 @@ class MessageSchema(Schema):
     body = fields.Str()
     country = fields.Str()
     country_name = fields.Str()
+    type = fields.Str(validate=validate.OneOf(['public', 'private']))
 
     def get_ident(self, obj):
         h = hashlib.sha256()
