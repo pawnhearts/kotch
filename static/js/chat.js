@@ -43,6 +43,7 @@ window.onload = function () {
     };
     ws.onmessage = function (event) {
         var message = JSON.parse(event.data);
+        console.log(message)
         if (message.type == 'message') {
             chat.messages.push(message.data);
         }
