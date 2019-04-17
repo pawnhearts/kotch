@@ -44,6 +44,7 @@ async def websocket(request):
         if msg.type == aiohttp.WSMsgType.TEXT:
             data = json.loads(msg.data)
             print(data)
+            print(data.get('file'))
             for client in clients:
                 await client.send_json({'type': 'message', 'data': {'body': data['body'], 'country': 'RU-48', 'name': 'kot'}})
         elif msg.type == aiohttp.WSMsgType.ERROR:
