@@ -41,8 +41,17 @@ window.onload = function () {
     ws.onmessage = function (event) {
         var message = JSON.parse(event.data);
         console.log(message)
-        if (message.type == 'message') {
-            chat.messages.push(message.data);
+        switch(message.type) {
+            case 'message':
+                chat.messages.push(message.data);
+                break;
+            case 'delete':
+                chat.messages.forEach(function(message, i) {
+                   if(chat.messages[i].count == message.data.count) {
+                        chat.messages.splice(i, 1);
+                    }
+                });
+                break;
         }
     };
 
