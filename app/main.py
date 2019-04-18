@@ -5,6 +5,7 @@ from aiohttp import web
 
 from .settings import Settings
 from .views import index, post, websocket
+from .tasks import start_background_tasks
 
 
 THIS_DIR = Path(__file__).parent
@@ -29,6 +30,7 @@ async def create_app():
     )
     app.messages = [
     ]
+    app.on_startup.append(start_background_tasks)
 
     setup_routes(app)
     return app

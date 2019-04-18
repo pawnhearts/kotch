@@ -18,7 +18,7 @@ async def index(app, request):
 async def post(app, request):
     data = await request.post()
     schema = MessageSchema()
-    data = schema.load(data)
+    data = schema.load(data).data
     name = data.get('name')
     body = data.get('body')
     file = data.get('file')

@@ -14,7 +14,7 @@ class MessageSchema(Schema):
     body = fields.Str()
     country = fields.Str()
     country_name = fields.Str()
-    type = fields.Str(validate=validate.OneOf(['public', 'private']))
+    type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
 
     def get_ident(self, obj):
         h = hashlib.sha256()
