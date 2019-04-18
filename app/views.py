@@ -35,13 +35,14 @@ async def post(request):
         'country': 'PL-77',
         'ip': request.remote,
     })
-    print(message)
-    message=message.data
+    if message.errors:
+        return web.json_response(message.errors, status=400)
+
     for client in request.app.clients:
-        await client.send_json(schema.dump_message(message))
-    request.app.messages.append(message)
+        await client.send_json(schema.dump_message(message.data))
+    request.app.messages.append(message.data)
     request.app.messages = request.app.messages[-100:]
-    return web.Response(text='ok')
+    return web.json_response(message.data)
 
 
 async def websocket(request):

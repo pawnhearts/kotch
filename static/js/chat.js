@@ -7,6 +7,7 @@ Vue.component('message', {
   props: ['message'],
   template: `
     <div class="message">
+        <message v-for="quote message.reply_to" 
         {{ message.datetime|formatDate }} {{ message.count }} {{ message.ident }}
         <div class="header"><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img v-if="message.country.indexOf('-') !== -1"
  v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}</div>
