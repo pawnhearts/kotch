@@ -2,17 +2,19 @@ import asyncio
 import pickle
 import os
 
+from .main import BASE_DIR
+
 
 def load_db(app):
-    if os.path.exists('messages.db'):
-        with open('messages.db', 'rb') as f:
+    if (BASE_DIR /'messages.db').exists():
+        with open(BASE_DIR /'messages.db', 'rb') as f:
             app.messages = pickle.load(f)
 
 
 async def save_db(app):
     while True:
         await asyncio.sleep(5)
-        with open('messages.db', 'wb') as f:
+        with open(BASE_DIR /'messages.db', 'wb') as f:
             pickle.dump(app.messages, f)
 
 

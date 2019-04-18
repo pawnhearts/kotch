@@ -8,6 +8,7 @@ from aiohttp.web import json_response
 from aiohttp.web_exceptions import HTTPFound
 import asyncio
 
+from .main import BASE_DIR
 from .models import MessageSchema
 
 
@@ -23,7 +24,7 @@ async def post(request):
     body = data.get('body')
     file = data.get('file')
     if file:
-        with open('static/uploads/{}'.format(file.filename), 'wb') as f:
+        with open(BASE_DIR / 'static/uploads' / file.filename, 'wb') as f:
             f.write(file.file.read())
 
     message = {'body': body, 'name': name, 'file': file and file.filename, 'country': 'PL-77'}

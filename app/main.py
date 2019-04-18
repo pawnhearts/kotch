@@ -1,5 +1,4 @@
 from pathlib import Path
-from functools import partial
 
 from aiohttp import web
 
