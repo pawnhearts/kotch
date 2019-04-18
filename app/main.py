@@ -6,6 +6,9 @@ from .settings import Settings
 from .views import index, post, websocket
 from .tasks import start_background_tasks
 
+import uvloop
+uvloop.install()
+
 
 THIS_DIR = Path(__file__).parent
 BASE_DIR = THIS_DIR.parent
