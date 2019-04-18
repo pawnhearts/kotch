@@ -8,6 +8,7 @@ settings = Settings()
 class MessageSchema(Schema):
     count = fields.Integer()
     ip = fields.Str()
+    datetime = fields.DateTime()
     ident = fields.Method('get_ident', dump_only=True)
     name = fields.Str()
     date = fields.DateTime()

@@ -1,12 +1,17 @@
+<link rel="stylesheet" href="/static/chat.css">
+<div id="loader"></div>
 <div id="chat">
   <ol>
     <div class="message" v-for="message in messages">
+        {{ message.datetime|formatDate }}
         <div class="header"><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img v-if="message.country.indexOf('-') !== -1"
  v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}</div>
         <div class="body">{{ message.body }}</div>
         <div v-if="message.file">
             <img v-bind:src="'/static/uploads/'+message.file">
         </div>
+        <button @click="reply(message)">reply</button>
+        <button @click="ignore(message)">ignore</button>
     </div>
   </ol>
 </div>
@@ -15,10 +20,11 @@
     <form method="post" action="/post" target="posttarget" name="post" id="post">
         <input name="file" type="file" id="file">
         <input name="name">
-        <textarea name="body"></textarea>
+        <textarea name="body" id="body"></textarea>
         <input type="submit" value="post" name="post" id="post">
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="/static/js/reconnecting-websocket.min.js"></script>
 <script src="/static/js/chat.js"></script>

@@ -62,3 +62,7 @@ class Settings:
                                    'you\'ll need to run `source activate.settings.sh` '
                                    'or you can set that single environment variable with '
                                    '`export {0}="<value>"`'.format(env_var_name))
+
+
+THIS_DIR = Path(__file__).parent
+BASE_DIR = THIS_DIR.parent

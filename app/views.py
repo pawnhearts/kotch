@@ -27,10 +27,17 @@ async def post(request):
         with open(BASE_DIR / 'static/uploads' / file.filename, 'wb') as f:
             f.write(file.file.read())
 
-    message = {'body': body, 'name': name, 'file': file and file.filename, 'country': 'PL-77'}
+    message = {
+        'count': request.app.messages[-1]['count']+1,
+        'body': body,
+        'name': name,
+        'file': file and file.filename,
+        'country': 'PL-77',
+        'datetime': datetime.now()
+    }
     for client in request.app.clients:
         await client.send_json(schema.dump_message(message))
-    request.app.messages.app.end(message)
+    request.app.messages.append(message)
     request.app.messages = request.app.messages[-100:]
     return web.Response(text='ok')
 

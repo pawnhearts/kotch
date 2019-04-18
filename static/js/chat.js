@@ -28,15 +28,29 @@ var chat = new Vue({
             },
         ]
     },
-    computed: {}
+    computed: {},
+    methods: {
+        reply: function(message) {
+            document.getElementById('body').value = '>>'+message.count;
+        },
+        ignore: function(message) {
+
+        },
+    },
+    filters: {
+        formatDate: function(value) {
+          if (value) {
+            return moment(String(value)).format('MM/DD/YYYY hh:mm')
+          }
+        }
+    }
 });
-var ws;
-window.onload = function () {
-    ws = new ReconnectingWebSocket("ws://localhost:8888/ws");
+
+
+document.addEventListener('DOMContentLoaded', function(){
+    var ws = new ReconnectingWebSocket("ws://localhost:8888/ws");
     ws.onopen = function () {
-        // Web Socket is connected, send data using send()
-        // ws.send("Message to send");
-        // alert("Message is sent...");
+        document.getElementById("loader").style.display = "none";
     };
     ws.onmessage = function (event) {
         var message = JSON.parse(event.data);
@@ -56,7 +70,7 @@ window.onload = function () {
     };
 
     ws.onclose = function () {
-
+        document.getElementById("loader").style.display = "block";
     }
 
     var form = document.getElementById('post')
@@ -89,4 +103,4 @@ window.onload = function () {
 
     }
 
-}
+})
