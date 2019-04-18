@@ -1,5 +1,7 @@
 from marshmallow import Schema, fields, validate
 import hashlib
+from datetime import datetime
+
 from .settings import Settings
 
 settings = Settings()
@@ -8,12 +10,14 @@ settings = Settings()
 class MessageSchema(Schema):
     count = fields.Integer()
     ip = fields.Str()
-    datetime = fields.DateTime()
+    datetime = fields.DateTime(missing=lambda: datetime.utcnow().isoformat())
+    reply_to = fields.List(fields.Integer())
     ident = fields.Method('get_ident', dump_only=True)
     name = fields.Str()
     date = fields.DateTime()
     body = fields.Str()
     country = fields.Str()
+    region = fields.Str()
     country_name = fields.Str()
     type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
 

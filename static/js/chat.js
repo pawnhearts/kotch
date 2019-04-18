@@ -1,32 +1,30 @@
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD.MM.YYYY HH:mm')
+  }
+});
+Vue.component('message', {
+  props: ['message'],
+  template: `
+    <div class="message">
+        {{ message.datetime|formatDate }} {{ message.count }} {{ message.ident }}
+        <div class="header"><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img v-if="message.country.indexOf('-') !== -1"
+ v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}</div>
+        <div class="body">{{ message.body }}</div>
+        <div v-if="message.file">
+            <img v-bind:src="'/static/uploads/'+message.file">
+        </div>
+        <button @click="reply(message)">reply</button>
+        <button @click="ignore(message)">ignore</button>
+    </div>
+  `
+})
+
 var chat = new Vue({
     el: '#chat',
     data: {
-        messages: [
-            {
-                body: 'test',
-                name: 'kot',
-                country: 'PL-77',
-                country_name: 'Poland',
-                count: 1,
-                date: "2019-04-09T00:48:58.000Z"
-            },
-            {
-                body: 'test',
-                name: 'kot',
-                country: 'PL-77',
-                country_name: 'Poland',
-                count: 1,
-                date: "2019-04-09T00:48:58.000Z"
-            },
-            {
-                body: 'test',
-                name: 'kot',
-                country: 'RU',
-                country_name: 'Poland',
-                count: 1,
-                date: "2019-04-09T00:48:58.000Z"
-            },
-        ]
+        messages: [],
+        messages_by_count: {}
     },
     computed: {},
     methods: {
@@ -36,13 +34,6 @@ var chat = new Vue({
         ignore: function(message) {
 
         },
-    },
-    filters: {
-        formatDate: function(value) {
-          if (value) {
-            return moment(String(value)).format('MM/DD/YYYY hh:mm')
-          }
-        }
     }
 });
 
@@ -58,13 +49,15 @@ document.addEventListener('DOMContentLoaded', function(){
         switch(message.type) {
             case 'message':
                 chat.messages.push(message.data);
+                chat.messages_by_count[message.data.count] = message.data;
                 break;
             case 'delete':
                 chat.messages.forEach(function(message, i) {
                    if(chat.messages[i].count == message.data.count) {
                         chat.messages.splice(i, 1);
-                    }
+                   }
                 });
+                delete chat.messages_by_count[message.data.count]
                 break;
         }
     };

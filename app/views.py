@@ -27,14 +27,16 @@ async def post(request):
         with open(BASE_DIR / 'static/uploads' / file.filename, 'wb') as f:
             f.write(file.file.read())
 
-    message = {
-        'count': request.app.messages[-1]['count']+1,
+    message = schema.load({
+        'count': request.app.messages[-1]['count']+1 if request.app.messages else 1,
         'body': body,
         'name': name,
         'file': file and file.filename,
         'country': 'PL-77',
-        'datetime': datetime.now()
-    }
+        'ip': request.remote,
+    })
+    print(message)
+    message=message.data
     for client in request.app.clients:
         await client.send_json(schema.dump_message(message))
     request.app.messages.append(message)
