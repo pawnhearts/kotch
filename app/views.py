@@ -34,6 +34,7 @@ async def post(request):
         'file': file and file.filename,
         'country': 'PL-77',
         'ip': request.remote,
+        #'reply_to': [16],
     })
     if message.errors:
         return web.json_response(message.errors, status=400)
@@ -42,7 +43,7 @@ async def post(request):
         await client.send_json(schema.dump_message(message.data))
     request.app.messages.append(message.data)
     request.app.messages = request.app.messages[-100:]
-    return web.json_response(message.data)
+    return web.json_response(schema.dump(message.data))
 
 
 async def websocket(request):
