@@ -11,11 +11,11 @@ import asyncio
 from .models import MessageSchema
 
 
-async def index(app, request):
+async def index(request):
     return web.FileResponse('templates/chat.html')
 
 
-async def post(app, request):
+async def post(request):
     data = await request.post()
     schema = MessageSchema()
     data = schema.load(data).data
@@ -27,23 +27,20 @@ async def post(app, request):
             f.write(file.file.read())
 
     message = {'body': body, 'name': name, 'file': file and file.filename, 'country': 'PL-77'}
-    for client in clients:
+    for client in request.app.clients:
         await client.send_json(schema.dump_message(message))
-    app.messages.append(message)
-    app.messages = app.messages[-100:]
+    request.app.messages.app.end(message)
+    request.app.messages = request.app.messages[-100:]
     return web.Response(text='ok')
 
 
-clients = set()
-
-
-async def websocket(app, request):
+async def websocket(request):
 
     ws = web.WebSocketResponse()
     await ws.prepare(request)
-    clients.add(ws)
+    request.app.clients.add(ws)
     schema = MessageSchema()
-    for message in app.messages:
+    for message in request.app.messages:
         await ws.send_json(schema.dump_message(message))
 
     async for msg in ws:
@@ -54,5 +51,5 @@ async def websocket(app, request):
             print('ws connection closed with exception %s' %
                   ws.exception())
 
-    clients.remove(ws)
+    request.app.clients.remove(ws)
     return ws

@@ -14,9 +14,9 @@ BASE_DIR = THIS_DIR.parent
 
 def setup_routes(app):
     app.add_routes([
-        web.get('/', partial(index, app)),
-        web.post('/post', partial(post, app)),
-        web.get('/ws', partial(websocket, app)),
+        web.get('/', index),
+        web.post('/post', post),
+        web.get('/ws', websocket),
     ])
     app.router.add_static('/static/', path='static/', name='static')
 
@@ -28,8 +28,8 @@ async def create_app():
         name='chat',
         settings=settings
     )
-    app.messages = [
-    ]
+    app.messages = []
+    app.clients = {}
     app.on_startup.append(start_background_tasks)
 
     setup_routes(app)
