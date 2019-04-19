@@ -17,6 +17,7 @@ class MessageSchema(Schema):
     body = fields.Str()
     country = fields.Str()
     country_name = fields.Str()
+    file = fields.Str(required=False)
     type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
 
     def get_ident(self, obj):

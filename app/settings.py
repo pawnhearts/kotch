@@ -21,6 +21,14 @@ class Settings:
     _ENV_PREFIX = 'APP_'
     MESSAGE_FILE = Path('./messages.txt')
     SALT = 'dagfsdgadsg'
+    date_format = '%Y-%m-%d %H:%M:%S'
+    image_extensions = ["jpg", "jpeg", "png", "gif"]
+    video_extensions = ["webm", "mp4", "flv"]
+    audio_extensions = ["ogg", "mp3"]
+    image_codecs = ['JPEG', 'PNG', 'GIF']
+    video_codecs = ['theora', 'vp8', 'vp9', 'h264', 'vp6f']
+    thumbnail_size = (120, 100)
+    admin_password = '111'
 
     def __init__(self, **custom_settings):
         """

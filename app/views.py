@@ -18,12 +18,13 @@ async def index(request):
 
 async def post(request):
     data = await request.post()
+    file = data.get('file')
     schema = MessageSchema()
     data = schema.load(data).data
 
     name = data.get('name')
     body = data.get('body')
-    file = data.get('file')
+
     if file:
         with open(BASE_DIR / 'static/uploads' / file.filename, 'wb') as f:
             f.write(file.file.read())

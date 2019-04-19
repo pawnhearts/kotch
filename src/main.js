@@ -13,7 +13,7 @@ Vue.filter('formatDate', function (value) {
 
 new Vue({
     el: '#chat',
-    components: [App],
+    components: {App},
     template: '<App/>',
     render: h => h(App)
 });
