@@ -18,20 +18,17 @@ new Vue({
     render: h => h(App)
 });
 
-/* eslint-disable no-new */
 
-
-// window.chat = new Vue({
+// new Vue({
 //    el: '#chat',
-//   // template: `
-//   //   <div id="chat">
-//   //       <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
-// 	// </div>`,
-//   // components: { Message },
+//   template: `
+//     <div id="chat">
+//         <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
+// 	</div>`,
+//    components: { Message },
 //     data: {
-//         messages: [],
-//         messages_by_count: {}
+//         messages: chat.messages,
+//         messages_by_count: chat.messages_by_count
 //     },
-//   template: 'aaa'
+//   render: h => h(App)
 //  })
-//
