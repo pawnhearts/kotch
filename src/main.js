@@ -27,17 +27,17 @@ var chat = new Vue({
   el: '#chat',
   template: `
     <div id="chat">
+    aaa
         <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
 	</div>
   `,
-  // components: { App }
+    components: { Message },
     data: {
         messages: [],
         messages_by_count: {}
     },
     computed: {},
 })
-
 
 document.addEventListener('DOMContentLoaded', function () {
     var ws = new ReconnectingWebSocket("ws://localhost:8888/ws");
