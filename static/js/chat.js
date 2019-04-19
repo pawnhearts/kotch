@@ -7,12 +7,13 @@ Vue.component('message', {
     props: ['message', 'root'],
     computed: {
         reply_to: function () {
-            if(!this.message.reply_to) return []
-            return this.message.reply_to.map(function(count){
+            if (!this.message.reply_to) return []
+            return this.message.reply_to.map(function (count) {
                 return chat.messages_by_count[count]
             })
         }
     },
+
     template: `
     <div class="message">
         <div style="margin-left:100px">
@@ -28,7 +29,15 @@ Vue.component('message', {
         <button @click="reply(message)">reply</button>
         <button @click="ignore(message)">ignore</button>
     </div>
-  `
+  `,
+    methods: {
+        reply: function (message) {
+            document.getElementById('body').value = '>>' + message.count;
+        },
+        ignore: function (message) {
+
+        }
+    },
 })
 
 var chat = new Vue({
@@ -37,15 +46,7 @@ var chat = new Vue({
         messages: [],
         messages_by_count: {}
     },
-    computed: {},
-    methods: {
-        reply: function (message) {
-            document.getElementById('body').value = '>>' + message.count;
-        },
-        ignore: function (message) {
-
-        },
-    }
+    computed: {}
 });
 
 
