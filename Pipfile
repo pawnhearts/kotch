@@ -10,6 +10,7 @@ aiohttp = "*"
 aiohttp-devtools = "*"
 marshmallow = "*"
 uvloop = "*"
+pygeoip = "*"
 
 [requires]
 python_version = "3.7"

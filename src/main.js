@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Message from './components/Message.vue'
 import moment from 'moment'
 
 Vue.config.productionTip = false
@@ -43,9 +42,6 @@ window.vm = new Vue({
     template: '<App/>',
     render: h => h(App),
     methods: {
-        foo: function(){
-            console.log(this.$refs.app)
-        }
     }
 });
 

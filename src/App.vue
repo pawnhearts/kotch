@@ -1,16 +1,21 @@
 <template>
+	<div>
 	<div id="chat">
         <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1" ref="message"></message>
+	</div>
+	<PostForm></PostForm>
 	</div>
 </template>
 
 <script>
 import Message from './components/Message.vue'
+import PostForm from './components/PostForm.vue'
 
 export default {
 	name: 'chat',
 	components: {
-		Message
+		Message,
+		PostForm
 	},
     data: function(){
         return {

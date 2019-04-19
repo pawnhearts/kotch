@@ -16,6 +16,15 @@ class FileSchema(Schema):
     type = fields.Str(default='image', validate=validate.OneOf(['image', 'video', 'audio']))
 
 
+class LocationSchema(Schema):
+        country = fields.Str()
+        region = fields.Str(required=False, allow_none=True)
+        country_name = fields.Str()
+        region_name = fields.Str(required=False, allow_none=True)
+        latitude = fields.Float(required=False, allow_none=True)
+        longitude = fields.Float(required=False, allow_none=True)
+
+
 class MessageSchema(Schema):
     count = fields.Integer(required=True)
     ip = fields.Str()
@@ -23,9 +32,9 @@ class MessageSchema(Schema):
     reply_to = fields.List(fields.Integer(), required=False)
     ident = fields.Method('get_ident', dump_only=True)
     name = fields.Str()
+    icon = fields.Str(required=False, allow_none=True)
     body = fields.Str()
-    country = fields.Str()
-    country_name = fields.Str()
+    location = fields.Nested(LocationSchema(), required=False, allow_none=True)
     file = fields.Nested(FileSchema(), required=False, allow_none=True)
     type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
 

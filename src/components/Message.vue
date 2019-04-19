@@ -6,9 +6,16 @@
                      v-if="root"></message>
         </div>
         {{ message.datetime|formatDate }} {{ message.count }} {{ message.ident }}
-        <div class="header"><img v-bind:src="'/static/icons/countries/'+message.country.split('-')[0]+'.png'"><img
-                v-if="message.country.indexOf('-') !== -1"
-                v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}
+        <div class="header">
+            <span v-if="!message.icon && message.location">
+                <img v-bind:src="'/static/icons/countries/'+message.location.country+'.png'">
+                <img v-if="message.location.region" v-bind:src="'/static/icons/countries/'+message.location.country+'-'+message.location.region+'.png'">
+            </span>
+            <span v-if="message.icon">
+                <img v-bind:src="'/static/icons/tripflags/'+message.icon+'.png'">
+            </span>
+            {{ message.name }}
+
         </div>
         <div v-if="message.file">
             <img v-if="message.file.type == 'image'" :class="state.expanded?'expanded':'picture'" v-bind:src="'/static/uploads/'+(state.expanded?message.file.file:message.file.thumb)" @click="expand">
