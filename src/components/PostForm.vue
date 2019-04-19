@@ -59,6 +59,7 @@
                         this.errors.push(k+': '+error.response.data.error[k])
                     }
                 });
+                vm.$emit('replying')
                 return false;
             },
             handleFileUpload() {
