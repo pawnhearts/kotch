@@ -11,7 +11,9 @@
                 v-bind:src="'/static/icons/countries/'+message.country+'.png'">{{ message.name }}
         </div>
         <div v-if="message.file">
-            <img :class="state.expanded?'expanded':'picture'" v-bind:src="'/static/uploads/'+message.file" @click="expand">
+            <img v-if="message.file.type == 'image'" :class="state.expanded?'expanded':'picture'" v-bind:src="'/static/uploads/'+(state.expanded?message.file.file:message.file.thumb)" @click="expand">
+            <a :href="'/static/uploads/'+message.file.file" target="_blank" v-if="message.file.type == 'video'"><img v-bind:src="'/static/uploads/'+(state.expanded?message.file.file:message.file.thumb)"></a>
+            <div class="filename"><a :href="'/static/uploads/'+message.file.file" target="_blank">{{ message.file.filename }}</a> ({{ message.file.size | fileSize}})</div>
         </div>
         <div class="body">{{ message.body }}</div>
         <button @click="reply(message)">reply</button>

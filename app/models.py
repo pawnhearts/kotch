@@ -7,6 +7,17 @@ from .settings import Settings
 settings = Settings()
 
 
+class FileSchema(Schema):
+    file = fields.Str()
+    thumb = fields.Str(required=False, allow_none=True)
+    width = fields.Integer(required=False, allow_none=True)
+    height = fields.Integer(required=False, allow_none=True)
+    duration = fields.Str(required=False, allow_none=True)
+    filename = fields.Str()
+    size = fields.Integer()
+    type = fields.Str(default='image', validate=validate.OneOf(['image', 'video', 'audio']))
+
+
 class MessageSchema(Schema):
     count = fields.Integer(required=True)
     ip = fields.Str()
@@ -17,7 +28,7 @@ class MessageSchema(Schema):
     body = fields.Str()
     country = fields.Str()
     country_name = fields.Str()
-    file = fields.Str(required=False)
+    file = fields.Nested(FileSchema(), required=False)
     type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
 
     def get_ident(self, obj):

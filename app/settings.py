@@ -2,6 +2,10 @@ import os
 from pathlib import Path
 
 
+THIS_DIR = Path(__file__).parent
+BASE_DIR = THIS_DIR.parent
+
+
 class Required:
     def __init__(self, v_type=None):
         self.v_type = v_type
@@ -19,7 +23,7 @@ class Settings:
     Or, passing the custom setting as a keyword argument when initialising settings (useful when testing)
     """
     _ENV_PREFIX = 'APP_'
-    MESSAGE_FILE = Path('./messages.txt')
+    MESSAGE_FILE = BASE_DIR / 'messages.txt'
     SALT = 'dagfsdgadsg'
     date_format = '%Y-%m-%d %H:%M:%S'
     image_extensions = ["jpg", "jpeg", "png", "gif"]
@@ -29,6 +33,7 @@ class Settings:
     video_codecs = ['theora', 'vp8', 'vp9', 'h264', 'vp6f']
     thumbnail_size = (120, 100)
     admin_password = '111'
+    uploads_path = BASE_DIR / 'static/uploads'
 
     def __init__(self, **custom_settings):
         """
@@ -72,5 +77,3 @@ class Settings:
                                    '`export {0}="<value>"`'.format(env_var_name))
 
 
-THIS_DIR = Path(__file__).parent
-BASE_DIR = THIS_DIR.parent

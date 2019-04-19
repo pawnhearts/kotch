@@ -19,5 +19,6 @@ async def save_db(app):
 
 
 async def start_background_tasks(app):
+    # asyncio.get_child_watcher().attach_loop(app.loop)
     load_db(app)
     app['save_db_task'] = app.loop.create_task(save_db(app))

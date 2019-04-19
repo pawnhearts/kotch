@@ -6,8 +6,8 @@ from .settings import Settings, BASE_DIR, THIS_DIR
 from .views import index, post, websocket
 from .tasks import start_background_tasks
 
-import uvloop
-uvloop.install()
+# import uvloop
+# uvloop.install()
 
 
 def setup_routes(app):
@@ -20,7 +20,7 @@ def setup_routes(app):
 
 
 async def create_app():
-    app = web.Application()
+    app = web.Application(client_max_size=40*1024*1024)
     settings = Settings()
     app.update(
         name='chat',
