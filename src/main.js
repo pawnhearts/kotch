@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import App from './App.vue'
+// import App from './App.vue'
+import Message from './components/Message.vue'
 import moment from 'moment'
 
 Vue.config.productionTip = false
@@ -10,14 +11,32 @@ Vue.filter('formatDate', function (value) {
     }
 });
 
+// var chat = new Vue({
+//     el: '#chat',
+//     data: {
+//         messages: [],
+//         messages_by_count: {}
+//     },
+//     computed: {},
+//     components: [App],
+//     render: h => h(App)
+// });
+
+/* eslint-disable no-new */
 var chat = new Vue({
-    el: '#chat',
+  el: '#chat',
+  template: `
+    <div id="chat">
+        <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
+	</div>
+  `,
+  // components: { App }
     data: {
         messages: [],
         messages_by_count: {}
     },
-    computed: {}
-});
+    computed: {},
+})
 
 
 document.addEventListener('DOMContentLoaded', function () {

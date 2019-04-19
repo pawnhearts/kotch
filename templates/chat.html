@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/static/chat.css">
 <div id="loader"></div>
 <div id="chat">
-<message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
+    <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
 </div>
 <div id="postform">
     <iframe style="visibility:hidden;" id="posttarget" name="posttarget"></iframe>
@@ -16,6 +16,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="/static/js/reconnecting-websocket.min.js"></script>
-<script src="/static/js/bundle.js"></script>
-<!--script src="http://localhost:8080/main.js"></script-->
+<!--script src="/static/js/bundle.js"></script-->
+<script src="http://localhost:8080/static/js/bundle.js"></script>
 

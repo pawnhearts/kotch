@@ -8,13 +8,14 @@
 import Message from './components/Message.vue'
 
 export default {
-    name: 'chat',
 	components: {
 		Message
 	},
-    data: {
-        messages: [],
-        messages_by_count: {}
+    data: function(){
+        return {
+            messages: [],
+            messages_by_count: {}
+        }
     }
 }
 </script>
