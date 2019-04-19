@@ -59,7 +59,7 @@ class MessageSchema(Schema):
 
     @validates('icon')
     def validate_icon(self, icon):
-        if not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
+        if icon and not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
             raise ValidationError('Icon doesn\'t exist')
 
     class Meta:

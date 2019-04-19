@@ -23,9 +23,6 @@
     import axios from 'axios'
     export default {
         name: 'postform',
-        /*
-          Defines the data used by the component
-        */
         data() {
             return {
                 errors: [],
@@ -38,45 +35,28 @@
         },
 
         methods: {
-            /*
-              Submits the file to the server
-            */
             post() {
-                /*
-                        Initialize the form data
-                    */
-                var form = document.getElementById('post-form');
-
+                let form = document.getElementById('post-form');
                 let formData = new FormData(form);
 
-                /*
-                    Add the form data we need to submit
-                */
+
                 if(this.file) {
                     formData.append('file', this.file);
                 }
 
-                /*
-                  Make the request to the POST /single-file URL
-                */
                 const options = {
                   method: 'POST',
                   headers: { 'content-type': 'application/x-www-form-urlencoded' },
                   data: formData,
                   url: '/post'
                 };
-                axios(options).then(function () {
-                    console.log('SUCCESS!!');
-                })
-                    .catch((error) => {
-                        this.errors = Object.values(error.response.data.error);
-                    });
+                axios(options).then(() => {
+                    this.errors = [];
+                }).catch((error) => {
+                    this.errors = Object.values(error.response.data.error);
+                });
                 return false;
             },
-
-            /*
-              Handles a change on the file upload
-            */
             handleFileUpload() {
                 this.file = this.$refs.file.files[0];
             }

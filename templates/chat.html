@@ -1,16 +1,6 @@
 <link rel="stylesheet" href="/static/chat.css">
 <div id="loader"></div>
-<div id="chat">
-</div>
-<div id="postform">
-    <iframe style="visibility:hidden;" id="posttarget" name="posttarget"></iframe>
-    <form method="post" action="/post" target="posttarget" name="post" id="post">
-        <input name="file" type="file" id="file">
-        <input name="reply_to" id="reply_to">
-        <input name="name">
-        <textarea name="body" id="body"></textarea>
-        <input type="submit" value="post" name="post" id="post">
-    </form>
+<div id="main">
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

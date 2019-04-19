@@ -27,38 +27,4 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("loader").style.display = "block";
     }
 
-    var form = document.getElementById('post')
-    var fileSelect = document.getElementById('file');
-
-    form.onsubmit = function (event) {
-        form.post.disabled = true
-        event.preventDefault();
-        var files = fileSelect.files;
-        var formData = new FormData();
-        var file = files[0];
-        if (file) formData.append('file', file, file.name);
-        formData.append('name', form.name.value)
-        formData.append('body', form.body.value)
-        formData.append('reply_to', form.reply_to.value)
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/post', true);
-        xhr.upload.onprogress = function (e) {
-            //var percentage = Math.round((e.loaded / e.total) * 100);
-            //console.log(percentage);
-        }
-        xhr.onload = function (e) {
-            form.post.disabled = false
-            if (xhr.status === 200) {
-                // fine
-            } else if(xhr.status === 400){
-                var data = JSON.parse(xhr.responseText)
-                alert(JSON.stringify(data.error))
-            } else {
-                alert(e);
-            }
-        };
-        xhr.send(formData);
-        vm.$emit('replying')
-    }
-
 })

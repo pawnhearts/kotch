@@ -37,9 +37,8 @@ Vue.filter('fileSize', function (num) {
 });
 
 window.vm = new Vue({
-    el: '#chat',
+    el: '#main',
     components: {App},
-    template: '<App/>',
     render: h => h(App),
     methods: {
     }
