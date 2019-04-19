@@ -50,8 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
             form.post.disabled = false
             if (xhr.status === 200) {
                 // fine
+            } else if(xhr.status === 400){
+                var data = JSON.parse(xhr.responseText)
+                alert(data.error)
             } else {
-                alert('An error occurred!');
+                alert(e);
             }
         };
         xhr.send(formData);

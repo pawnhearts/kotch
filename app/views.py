@@ -41,8 +41,7 @@ async def post(request):
             thumb = await make_thumbnail(settings.uploads_path / fileobj['file'])
             fileobj['thumb'], fileobj['width'], fileobj['height'], fileobj['duration'], fileobj['type'] = thumb
         except Exception as e:
-            raise
-            return web.json_response({'error': repr(e)}, status=400)
+            return web.json_response({'error': str(e)}, status=400)
     message = schema.load({
         'count': request.app.messages[-1]['count']+1 if request.app.messages else 1,
         'body': body,
@@ -53,7 +52,7 @@ async def post(request):
         'reply_to': data.get('reply_to'),
     })
     if message.errors:
-        return web.json_response(message.errors, status=400)
+        return web.json_response({'error': message.errors}, status=400)
 
     for client in request.app.clients:
         await client.send_json(schema.dump_message(message.data))
