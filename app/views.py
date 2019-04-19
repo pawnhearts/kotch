@@ -9,12 +9,9 @@ from aiohttp.web_exceptions import HTTPFound
 import asyncio
 from uuid import uuid1
 
-from .settings import BASE_DIR, Settings
+from .settings import BASE_DIR, settings
 from .models import MessageSchema
 from .thumbnails import make_thumbnail, get_extension
-
-
-settings = Settings()
 
 
 async def index(request):

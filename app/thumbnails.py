@@ -2,9 +2,7 @@ import asyncio
 import json
 import os.path
 
-from .settings import Settings
-
-settings = Settings()
+from .settings import settings
 
 
 def get_extension(path):

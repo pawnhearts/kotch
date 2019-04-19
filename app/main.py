@@ -2,7 +2,7 @@ from pathlib import Path
 
 from aiohttp import web
 
-from .settings import Settings, BASE_DIR, THIS_DIR
+from .settings import settings, BASE_DIR, THIS_DIR
 from .views import index, post, websocket
 from .tasks import start_background_tasks
 
@@ -20,8 +20,7 @@ def setup_routes(app):
 
 
 async def create_app():
-    app = web.Application(client_max_size=40*1024*1024)
-    settings = Settings()
+    app = web.Application(client_max_size=settings.client_max_size)
     app.update(
         name='chat',
         settings=settings

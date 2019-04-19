@@ -37,11 +37,16 @@ Vue.filter('fileSize', function (num) {
   return (neg ? '-' : '') + num + ' ' + unit;
 });
 
-new Vue({
+window.vm = new Vue({
     el: '#chat',
     components: {App},
     template: '<App/>',
-    render: h => h(App)
+    render: h => h(App),
+    methods: {
+        foo: function(){
+            console.log(this.$refs.app)
+        }
+    }
 });
 
 

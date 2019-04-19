@@ -2,9 +2,7 @@ from marshmallow import Schema, fields, validate, pre_load
 import hashlib
 from datetime import datetime
 
-from .settings import Settings
-
-settings = Settings()
+from .settings import settings
 
 
 class FileSchema(Schema):
@@ -28,7 +26,7 @@ class MessageSchema(Schema):
     body = fields.Str()
     country = fields.Str()
     country_name = fields.Str()
-    file = fields.Nested(FileSchema(), required=False)
+    file = fields.Nested(FileSchema(), required=False, allow_none=True)
     type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
 
     def get_ident(self, obj):

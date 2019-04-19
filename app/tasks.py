@@ -2,7 +2,7 @@ import asyncio
 import pickle
 import os
 
-from .settings import Settings, BASE_DIR, THIS_DIR
+from .settings import settings, BASE_DIR, THIS_DIR
 
 
 def load_db(app):

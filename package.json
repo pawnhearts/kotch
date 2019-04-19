@@ -6,7 +6,11 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && webpack --mode production",
-    "serve": "webpack-dev-server --mode development"
+    "serve": "webpack-dev-server --mode development",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "test": "{src}/*.js"
   },
   "author": "",
   "license": "ISC",

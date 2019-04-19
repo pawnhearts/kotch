@@ -1,6 +1,6 @@
 <template>
 	<div id="chat">
-        <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
+        <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1" ref="message"></message>
 	</div>
 </template>
 

@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var message = JSON.parse(event.data);
         switch (message.type) {
             case 'message':
+                console.log(message.data)
                 chat.messages.push(message.data);
                 chat.messages_by_count[message.data.count] = message.data;
                 break;
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
         xhr.send(formData);
-
+        vm.$emit('replying')
     }
 
 })
