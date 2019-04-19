@@ -14,8 +14,8 @@ export default {
 	},
     data: function(){
         return {
-            messages: [],
-            messages_by_count: {}
+            messages: chat.messages,
+            messages_by_count: chat.messages_by_count
         }
     }
 }
