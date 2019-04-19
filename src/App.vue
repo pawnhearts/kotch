@@ -1,7 +1,7 @@
 <template>
 	<div id="body">
         <div id="messages">
-            <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1" ref="message"></message>
+            <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
 	    </div>
         <PostForm/>
 	</div>

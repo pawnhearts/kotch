@@ -22,6 +22,8 @@ async def index(request):
 async def post(request):
     data = dict(await request.post())
     file = data.pop('file') if 'file' in data else None
+    if file:
+        data['file'] = {'file': file.filename, 'filename': file.filename, 'size': 0}
     fileobj = None
     schema = MessageSchema()
     data = schema.load(data)
@@ -45,7 +47,7 @@ async def post(request):
             return web.json_response({'error': {'file': str(e)}}, status=400)
 
     remote_ip = request.remote
-    remote_ip ='217.23.3.171'
+    remote_ip = '217.23.3.171'
     message = schema.load({
         'count': request.app.messages[-1]['count']+1 if request.app.messages else 1,
         'body': data.get('body'),
@@ -56,12 +58,13 @@ async def post(request):
         'ip': remote_ip,
         'reply_to': data.get('reply_to'),
     })
+    message_json = schema.dump_message(message.data)
 
     for client in request.app.clients:
-        await client.send_json(schema.dump_message(message.data))
+        await client.send_json(message_json)
     request.app.messages.append(message.data)
     request.app.messages = request.app.messages[-10:]
-    return web.json_response(schema.dump(message.data))
+    return web.json_response(message_json)
 
 
 async def websocket(request):

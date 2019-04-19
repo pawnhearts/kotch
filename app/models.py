@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate, pre_load, ValidationError, validates
+from marshmallow import Schema, fields, validate, pre_load, ValidationError, validates, validates_schema, validate
 import hashlib
 from datetime import datetime
 
@@ -17,23 +17,23 @@ class FileSchema(Schema):
 
 
 class LocationSchema(Schema):
-        country = fields.Str()
-        region = fields.Str(required=False, allow_none=True)
-        country_name = fields.Str()
-        region_name = fields.Str(required=False, allow_none=True)
-        latitude = fields.Float(required=False, allow_none=True)
-        longitude = fields.Float(required=False, allow_none=True)
+    country = fields.Str()
+    region = fields.Str(required=False, allow_none=True)
+    country_name = fields.Str()
+    region_name = fields.Str(required=False, allow_none=True)
+    latitude = fields.Float(required=False, allow_none=True)
+    longitude = fields.Float(required=False, allow_none=True)
 
 
 class MessageSchema(Schema):
-    count = fields.Integer(required=False, dump_only=True)
+    count = fields.Integer(required=False)
     ip = fields.Str()
     datetime = fields.DateTime(missing=lambda: datetime.utcnow().isoformat())
     reply_to = fields.List(fields.Integer(), required=False)
     ident = fields.Method('get_ident', dump_only=True)
-    name = fields.Str()
+    name = fields.Str(validate=validate.Length(max=50))
     icon = fields.Str(required=False, allow_none=True)
-    body = fields.Str()
+    body = fields.Str(validate=validate.Length(max=1024))
     location = fields.Nested(LocationSchema(), required=False, allow_none=True)
     file = fields.Nested(FileSchema(), required=False, allow_none=True)
     type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
@@ -52,18 +52,21 @@ class MessageSchema(Schema):
         if 'reply_to' in in_data:
             in_data = dict(in_data)
             if isinstance(in_data['reply_to'], str):
-                in_data['reply_to'] = in_data['reply_to'].split()
+                in_data['reply_to'] = [count for count in in_data['reply_to'].split() if count and count.isnumeric()]
             if not in_data['reply_to']:
                 del in_data['reply_to']
         return in_data
 
     @validates('icon')
     def validate_icon(self, icon):
-        print(icon)
-        if not icon:
-            return
-        if not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
+        if icon and not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
             raise ValidationError('Icon doesn\'t exist')
+
+    @validates_schema
+    def validate_not_empty(self, data):
+        if not data.get('body') and not data.get('file'):
+            raise ValidationError('Empty post')
 
     class Meta:
         exclude = ('ip',)
+

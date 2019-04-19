@@ -14,7 +14,7 @@
             <input name="icon" v-model="icon">
             <input name="name" v-model="name">
             <textarea name="body" id="body" v-model="body"></textarea>
-            <button v-on:click="post()">Submit</button>
+            <input type="submit" value="post">
         </div>
 </form>
 </template>
