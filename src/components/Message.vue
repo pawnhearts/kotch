@@ -1,6 +1,6 @@
 <template>
     <div v-bind:class="'message '+(replying?'replying':'')">
-        <div v-show="replying">Replying...</div>
+        <div v-show="replying">Replying...<button @click="reply(null)">Cancel</button></div>
         <div style="margin-left:100px">
             <message v-for="message in reply_to" v-bind:message="message" v-bind:key="message.count"
                      v-if="root"></message>
@@ -39,8 +39,12 @@
         methods: {
             reply: function (message) {
                 this.$root.$emit('replying');
-                this.replying = true;
-                document.getElementById('reply_to').value = message.count;
+                if(message) {
+                    this.replying = true;
+                    document.getElementById('reply_to').value = message.count;
+                } else {
+                    document.getElementById('reply_to').value = '';
+                }
             },
             ignore: function (message) {
 
