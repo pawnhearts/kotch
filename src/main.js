@@ -37,24 +37,9 @@ Vue.filter('fileSize', function (num) {
 });
 
 window.vm = new Vue({
-    el: '#main',
+    el: '#body',
     components: {App},
     render: h => h(App),
     methods: {
     }
 });
-
-
-// new Vue({
-//    el: '#chat',
-//   template: `
-//     <div id="chat">
-//         <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1"></message>
-// 	</div>`,
-//    components: { Message },
-//     data: {
-//         messages: chat.messages,
-//         messages_by_count: chat.messages_by_count
-//     },
-//   render: h => h(App)
-//  })

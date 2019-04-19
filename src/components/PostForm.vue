@@ -53,7 +53,11 @@
                 axios(options).then(() => {
                     this.errors = [];
                 }).catch((error) => {
-                    this.errors = Object.values(error.response.data.error);
+                    this.errors = [];
+                    console.log(error.response.data.error)
+                    for(let k in error.response.data.error) {
+                        this.errors.push(k+': '+error.response.data.error[k])
+                    }
                 });
                 return false;
             },

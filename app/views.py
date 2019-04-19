@@ -20,11 +20,14 @@ async def index(request):
 
 
 async def post(request):
-    data = await request.post()
-    file = data.get('file')
+    data = dict(await request.post())
+    file = data.pop('file') if 'file' in data else None
     fileobj = None
     schema = MessageSchema()
-    data = schema.load(data).data
+    data = schema.load(data)
+    if data.errors:
+        return web.json_response({'error': data.errors}, status=400)
+    data = data.data
 
     if file:
         fileobj = {
@@ -40,6 +43,7 @@ async def post(request):
             fileobj['thumb'], fileobj['width'], fileobj['height'], fileobj['duration'], fileobj['type'] = thumb
         except Exception as e:
             return web.json_response({'error': {'file': str(e)}}, status=400)
+
     remote_ip = request.remote
     remote_ip ='217.23.3.171'
     message = schema.load({
@@ -52,8 +56,6 @@ async def post(request):
         'ip': remote_ip,
         'reply_to': data.get('reply_to'),
     })
-    if message.errors:
-        return web.json_response({'error': message.errors}, status=400)
 
     for client in request.app.clients:
         await client.send_json(schema.dump_message(message.data))

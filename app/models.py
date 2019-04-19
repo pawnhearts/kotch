@@ -26,7 +26,7 @@ class LocationSchema(Schema):
 
 
 class MessageSchema(Schema):
-    count = fields.Integer(required=True)
+    count = fields.Integer(required=False, dump_only=True)
     ip = fields.Str()
     datetime = fields.DateTime(missing=lambda: datetime.utcnow().isoformat())
     reply_to = fields.List(fields.Integer(), required=False)
@@ -59,7 +59,10 @@ class MessageSchema(Schema):
 
     @validates('icon')
     def validate_icon(self, icon):
-        if icon and not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
+        print(icon)
+        if not icon:
+            return
+        if not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
             raise ValidationError('Icon doesn\'t exist')
 
     class Meta:

@@ -1,5 +1,5 @@
 <template>
-	<div id="main">
+	<div id="body">
         <div id="messages">
             <message v-for="message in messages" v-bind:message="message" v-bind:key="message.count" v-bind:root="1" ref="message"></message>
 	    </div>
@@ -12,7 +12,6 @@ import Message from './components/Message.vue'
 import PostForm from './components/PostForm.vue'
 
 export default {
-	name: 'main',
 	components: {
 		Message, PostForm
 	},
