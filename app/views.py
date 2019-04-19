@@ -20,6 +20,7 @@ async def post(request):
     data = await request.post()
     schema = MessageSchema()
     data = schema.load(data).data
+
     name = data.get('name')
     body = data.get('body')
     file = data.get('file')
@@ -34,7 +35,7 @@ async def post(request):
         'file': file and file.filename,
         'country': 'PL-77',
         'ip': request.remote,
-        #'reply_to': [16],
+        'reply_to': data.get('reply_to'),
     })
     if message.errors:
         return web.json_response(message.errors, status=400)

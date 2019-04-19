@@ -13,9 +13,14 @@ Vue.component('message', {
             })
         }
     },
-
+    data: function () {
+        return {
+            replying: false
+        }
+    },
     template: `
-    <div class="message">
+    <div v-bind:class="'message '+(replying?'replying':'')">
+        <div v-show="replying">Replying...</div>
         <div style="margin-left:100px">
         <message v-for="message in reply_to" v-bind:message="message" v-bind:key="message.count" v-if="root"></message>
         </div>
@@ -32,12 +37,17 @@ Vue.component('message', {
   `,
     methods: {
         reply: function (message) {
-            document.getElementById('body').value = '>>' + message.count;
+            this.$root.$emit('replying');
+            this.replying = true;
+            document.getElementById('reply_to').value = message.count;
         },
         ignore: function (message) {
 
         }
     },
+  mounted: function () {
+    this.$root.$on('replying', () => {this.replying=false;})
+  },
 })
 
 var chat = new Vue({
@@ -90,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (file) formData.append('file', file, file.name);
         formData.append('name', form.name.value)
         formData.append('body', form.body.value)
+        formData.append('reply_to', form.reply_to.value)
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/post', true);
         xhr.upload.onprogress = function (e) {

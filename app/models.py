@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields, validate, pre_load
 import hashlib
 from datetime import datetime
 
@@ -11,7 +11,7 @@ class MessageSchema(Schema):
     count = fields.Integer(required=True)
     ip = fields.Str()
     datetime = fields.DateTime(missing=lambda: datetime.utcnow().isoformat())
-    reply_to = fields.List(fields.Integer())
+    reply_to = fields.List(fields.Integer(), required=False)
     ident = fields.Method('get_ident', dump_only=True)
     name = fields.Str()
     body = fields.Str()
@@ -27,6 +27,16 @@ class MessageSchema(Schema):
     def dump_message(self, obj):
         dump = self.dump(obj)
         return {'type': 'message', 'data': dump.data}
+
+    @pre_load
+    def split_reply_to(self, in_data):
+        if 'reply_to' in in_data:
+            in_data = dict(in_data)
+            if isinstance(in_data['reply_to'], str):
+                in_data['reply_to'] = in_data['reply_to'].split()
+            if not in_data['reply_to']:
+                del in_data['reply_to']
+        return in_data
 
     class Meta:
         exclude = ('ip',)
