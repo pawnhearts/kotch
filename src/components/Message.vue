@@ -35,7 +35,7 @@
                 if (!this.message.reply_to) return []
                 return this.message.reply_to.map(function (count) {
                     return chat.messages_by_count[count]
-                })
+                }).filter(message => message)
             }
         },
         data: function () {

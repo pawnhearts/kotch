@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // fine
             } else if(xhr.status === 400){
                 var data = JSON.parse(xhr.responseText)
-                alert(data.error)
+                alert(JSON.stringify(data.error))
             } else {
                 alert(e);
             }
