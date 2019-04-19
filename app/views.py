@@ -39,7 +39,7 @@ async def post(request):
             thumb = await make_thumbnail(settings.uploads_path / fileobj['file'])
             fileobj['thumb'], fileobj['width'], fileobj['height'], fileobj['duration'], fileobj['type'] = thumb
         except Exception as e:
-            return web.json_response({'error': str(e)}, status=400)
+            return web.json_response({'error': {'file': str(e)}}, status=400)
     remote_ip = request.remote
     remote_ip ='217.23.3.171'
     message = schema.load({

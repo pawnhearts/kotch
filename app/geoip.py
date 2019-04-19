@@ -12,13 +12,11 @@ def get_location(remote_ip):
     schema = LocationSchema()
     location = geoip_db.record_by_addr(remote_ip)
     if location['country_code']:
-        location = {
+        return {
             'country': location['country_code'],
             'region': location.get('region_code', ''),
             'latitude': location['latitude'],
             'longitude': location['longitude'],
             'country_name': location['country_name'],
-            'region_name': region_names.get('{}-{}'.format(location['country_code'], location.get('region_code', '')), ''),
+            'region_name': region_names.get('{}-{}'.format(location['country_code'], location.get('region_code', ''))),
         }
-        print(location)
-        return location

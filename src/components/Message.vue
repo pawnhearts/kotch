@@ -2,8 +2,7 @@
     <div v-bind:class="'message '+(state.replying?'replying':'')">
         <div v-show="state.replying">Replying...<button @click="reply(null)">Cancel</button></div>
         <div style="margin-left:100px">
-            <message v-for="message in reply_to" v-bind:message="message" v-bind:key="message.count"
-                     v-if="root"></message>
+            <message v-for="message in reply_to" v-bind:message="message" v-if="root"></message>
         </div>
         {{ message.datetime|formatDate }} {{ message.count }} {{ message.ident }}
         <div class="header">

@@ -1,8 +1,8 @@
-from marshmallow import Schema, fields, validate, pre_load
+from marshmallow import Schema, fields, validate, pre_load, ValidationError, validates
 import hashlib
 from datetime import datetime
 
-from .settings import settings
+from .settings import settings, BASE_DIR
 
 
 class FileSchema(Schema):
@@ -56,6 +56,11 @@ class MessageSchema(Schema):
             if not in_data['reply_to']:
                 del in_data['reply_to']
         return in_data
+
+    @validates('icon')
+    def validate_icon(self, icon):
+        if not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
+            raise ValidationError('Icon doesn\'t exist')
 
     class Meta:
         exclude = ('ip',)

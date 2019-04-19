@@ -68,8 +68,8 @@
                 axios(options).then(function () {
                     console.log('SUCCESS!!');
                 })
-                    .catch(function () {
-                        console.log('FAILURE!!');
+                    .catch((error) => {
+                        this.errors = Object.values(error.response.data.error);
                     });
                 return false;
             },
