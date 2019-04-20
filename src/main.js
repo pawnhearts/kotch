@@ -61,7 +61,8 @@ export const store = new Vuex.Store({
       }
     },
     SOCKET_RECONNECT(state, count) {
-      console.info(state, count)
+      state.messages = [];
+      state.messages_by_count = {};
     },
     SOCKET_RECONNECT_ERROR(state) {
       state.socket.reconnectError = true;

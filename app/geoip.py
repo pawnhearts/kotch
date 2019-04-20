@@ -11,7 +11,7 @@ with open(BASE_DIR / 'regioncodes.json') as f:
 def get_location(remote_ip):
     schema = LocationSchema()
     location = geoip_db.record_by_addr(remote_ip)
-    if location['country_code']:
+    if location and location.get('country_code'):
         return {
             'country': location['country_code'],
             'region': location.get('region_code', ''),

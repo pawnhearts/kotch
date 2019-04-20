@@ -43,7 +43,7 @@
   from{ bottom:-100px; opacity:0 }
   to{ bottom:0; opacity:1 }
 }
-.replying{
+.replying, .private_for{
   border: 1px solid black;
 }
 .picture{
@@ -53,4 +53,7 @@
 }
 .expanded{
   cursor:pointer;
+}
+.private{
+  background-color: azure;
 }

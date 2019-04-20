@@ -1,4 +1,5 @@
 from pathlib import Path
+import weakref
 
 from aiohttp import web
 
@@ -27,6 +28,7 @@ async def create_app():
     )
     app.messages = []
     app.clients = set()
+    app.clients_by_ident = {}
     app.on_startup.append(start_background_tasks)
 
     setup_routes(app)

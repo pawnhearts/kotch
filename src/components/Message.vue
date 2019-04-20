@@ -1,6 +1,8 @@
 <template>
-    <div v-bind:class="'message '+(state.replying?'replying':'')">
+    <div v-bind:class="{message: true, replying: state.replying, private_for: state.private_for, private: message.type==='private'}">
+        <div v-show="state.private_for">Private for...<button @click="private(null)">Cancel</button></div>
         <div v-show="state.replying">Replying...<button @click="reply(null)">Cancel</button></div>
+        <div v-show="message.type == 'private'">Private</div>
         <div style="margin-left:100px">
             <message v-for="message in reply_to" v-bind:message="message" v-if="root"></message>
         </div>
@@ -27,6 +29,7 @@
         </div>
         <div class="body">{{ message.body }}</div>
         <button @click="reply(message)" v-if="root">reply</button>
+        <button @click="private(message)" v-if="root">private</button>
         <button @click="ignore(message)" v-if="root">ignore</button>
     </div>
 </template>
@@ -46,7 +49,7 @@
         },
         data: function () {
             return {
-                state:{replying: false, expanded: false}
+                state:{replying: false, private_for: false, expanded: false}
             }
         },
         methods: {
@@ -59,6 +62,15 @@
                     document.getElementById('reply_to').value = '';
                 }
             },
+            private: function (message) {
+                this.$root.$emit('private_for');
+                if(message) {
+                    this.state.private_for = true;
+                    document.getElementById('private_for').value = message.ident;
+                } else {
+                    document.getElementById('private_for').value = '';
+                }
+            },
             ignore: function (message) {
 
             },
@@ -69,6 +81,9 @@
         mounted: function () {
             this.$root.$on('replying', () => {
                 this.state.replying = false;
+            })
+            this.$root.$on('private_for', () => {
+                this.state.private_for = false;
             })
         }
     }

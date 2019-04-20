@@ -5,15 +5,16 @@
         <div class="container">
             <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
-            <ul>
-                <li v-for="error in errors">{{ error }}</li>
-            </ul>
+                <ul>
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
             </p>
             <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-            <input name="reply_to" id="reply_to" v-model="reply_to">
-            <input name="icon" v-model="icon">
-            <input name="name" v-model="name">
-            <textarea name="body" id="body" v-model="body"></textarea>
+            <input name="reply_to" id="reply_to">
+            <input name="private_for" id="private_for">
+            <input name="icon">
+            <input name="name">
+            <textarea name="body" id="body"></textarea>
             <input type="submit" value="post">
         </div>
 </form>
@@ -26,10 +27,6 @@
         data() {
             return {
                 errors: [],
-                name: '',
-                icon: '',
-                reply_to: '',
-                body: '',
                 file: ''
             }
         },
@@ -59,7 +56,8 @@
                         this.errors.push(k+': '+error.response.data.error[k])
                     }
                 });
-                vm.$emit('replying')
+                vm.$emit('replying');
+                vm.$emit('private_for');
                 return false;
             },
             handleFileUpload() {

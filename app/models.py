@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields, validate, pre_load, ValidationError, validates, validates_schema, validate
-import hashlib
 from datetime import datetime
 
+from .utils import get_ident
 from .settings import settings, BASE_DIR
 
 
@@ -37,11 +37,10 @@ class MessageSchema(Schema):
     location = fields.Nested(LocationSchema(), required=False, allow_none=True)
     file = fields.Nested(FileSchema(), required=False, allow_none=True)
     type = fields.Str(default='public', validate=validate.OneOf(['public', 'private']))
+    private_for = fields.Str(required=False, allow_none=True)
 
     def get_ident(self, obj):
-        h = hashlib.sha256()
-        h.update('{}{}'.format(settings.SALT, obj.get('ip', '127.0.0.1')).encode('UTF-8'))
-        return h.hexdigest()
+        return get_ident(obj.get('ip', '127.0.0.1'))
 
     def dump_message(self, obj):
         dump = self.dump(obj)
