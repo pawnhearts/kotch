@@ -56,10 +56,18 @@ class MessageSchema(Schema):
                 del in_data['reply_to']
         return in_data
 
-    @validates('icon')
-    def validate_icon(self, icon):
+    @pre_load
+    def check_icon_exists(self, in_data):
+        icon = in_data.get('icon')
         if icon and not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
-            raise ValidationError('Icon doesn\'t exist')
+            in_data = dict(in_data)
+            del in_data['icon']
+        return in_data
+
+    # @validates('icon')
+    # def validate_icon(self, icon):
+    #     if icon and not (BASE_DIR / 'static/icons/tripflags' / '{}.png'.format(icon)).exists():
+    #         raise ValidationError('Icon doesn\'t exist')
 
     @validates_schema
     def validate_not_empty(self, data):
