@@ -70,7 +70,7 @@ export const store = new Vuex.Store({
   }
 })
 
-Vue.use(VueNativeSock, 'ws://localhost:8888/ws', { store: store, format: 'json', reconnection: true })
+Vue.use(VueNativeSock, 'ws://'+location.host+'/ws', { store: store, format: 'json', reconnection: true })
 
 Vue.config.productionTip = false
 

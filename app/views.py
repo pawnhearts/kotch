@@ -3,14 +3,11 @@ import json
 
 import aiohttp
 from aiohttp import web
-from aiohttp.hdrs import METH_POST
-from aiohttp.web import json_response
-from aiohttp.web_exceptions import HTTPFound
 import asyncio
 from uuid import uuid1
 
 from .utils import get_ident
-from .geoip import get_location
+from .geoip import get_location, get_location_from_country
 from .settings import BASE_DIR, settings
 from .models import MessageSchema
 from .thumbnails import make_thumbnail, get_extension
@@ -21,13 +18,13 @@ async def index(request):
 
 
 async def post(request):
-    data = dict(await request.post())
-    file = data.pop('file') if 'file' in data else None
+    postdata = dict(await request.post())
+    file = postdata.pop('file') if 'file' in postdata else None
     if file:
-        data['file'] = {'file': file.filename, 'filename': file.filename, 'size': 0}
+        postdata['file'] = {'file': file.filename, 'filename': file.filename, 'size': 0}
     fileobj = None
     schema = MessageSchema()
-    data = schema.load(data)
+    data = schema.load(postdata)
     if data.errors:
         return web.json_response({'error': data.errors}, status=400)
     data = data.data
@@ -48,7 +45,7 @@ async def post(request):
             return web.json_response({'error': {'file': str(e)}}, status=400)
 
     remote_ip = request.remote
-    # remote_ip = '217.23.3.171'
+    remote_ip = '217.23.3.171'
     message = schema.load({
         'count': request.app.messages[-1]['count']+1 if request.app.messages else 1,
         'body': data.get('body'),
@@ -56,7 +53,7 @@ async def post(request):
         'icon': data.get('icon'),
         'private_for': data.get('private_for'),
         'file': fileobj,
-        'location': get_location(remote_ip),
+        'location': get_location(remote_ip) if 'country' not in postdata else get_location_from_country(postdata.get('country'), postdata.get('country_name')),
         'ip': remote_ip,
         'reply_to': data.get('reply_to'),
         'type': 'public' if not data.get('private_for') else 'private',
@@ -78,7 +75,6 @@ async def post(request):
 
 
 async def websocket(request):
-
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     ws.remote = request.remote
@@ -86,9 +82,10 @@ async def websocket(request):
     request.app.clients.add(ws)
     request.app.clients_by_ident[get_ident(request.remote)] = ws
     schema = MessageSchema()
-    for message in request.app.messages:
-        if message['type'] == 'public' or message.get('private_for') == ws.ident:
-            await ws.send_json(schema.dump_message(message))
+    if not request.query.get('no_history'):
+        for message in request.app.messages:
+            if message['type'] == 'public' or message.get('private_for') == ws.ident:
+                await ws.send_json(schema.dump_message(message))
 
     async for msg in ws:
         if msg.type == aiohttp.WSMsgType.TEXT:
