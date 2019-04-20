@@ -6,11 +6,14 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && webpack --mode production",
-    "serve": "webpack-dev-server --mode development",
+    "serve": "webpack-dev-server --mode development --inline=false",
     "watch": "npm-watch"
   },
   "watch": {
-    "test": "{src}/*.js"
+    "test": {
+      "patterns": ["src"],
+      "extensions": "js,vue"
+    }
   },
   "author": "",
   "license": "MIT",
