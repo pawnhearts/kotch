@@ -18,7 +18,7 @@
         </div>
         <div v-if="message.file">
             <img v-if="message.file.type == 'image'" :class="state.expanded?'expanded':'picture'" v-bind:src="'/static/uploads/'+(state.expanded?message.file.file:message.file.thumb)" @click="expand">
-            k<a :href="'/static/uploads/'+message.file.file" target="_blank" v-if="message.file.type == 'video'"><img v-bind:src="'/static/uploads/'+(state.expanded?message.file.file:message.file.thumb)"></a>
+            <a :href="'/static/uploads/'+message.file.file" target="_blank" v-if="message.file.type == 'video'"><img v-bind:src="'/static/uploads/'+(state.expanded?message.file.file:message.file.thumb)"></a>
             <div class="filename">
                 <a :href="'/static/uploads/'+message.file.file" target="_blank">{{ message.file.filename }}</a>
                 <span v-if="message.file.width">{{message.file.width}}x{{message.file.height}}</span>
@@ -26,8 +26,8 @@
             </div>
         </div>
         <div class="body">{{ message.body }}</div>
-        <button @click="reply(message)">reply</button>
-        <button @click="ignore(message)">ignore</button>
+        <button @click="reply(message)" v-if="root">reply</button>
+        <button @click="ignore(message)" v-if="root">ignore</button>
     </div>
 </template>
 
