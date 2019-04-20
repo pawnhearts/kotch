@@ -31,6 +31,7 @@ def process_chat(api, data):
         files = {'file': (data['image_filename'], open(localfile))}
     if 'trip' in data:
         newdata['icon'] = tripmap.get(data['trip'])
+    newdata['ident'] = data['identifier']
     ownposts.append(data['country']+data['body']+data.get('image_filename', ''))
     res = requests.post('%s/post' % config.kotch_url, data=newdata, files=files)
     print res.text
