@@ -101,9 +101,12 @@ async def websocket(request):
 
 
 async def bundle(request):
-    async with aiohttp.ClientSession() as session:
-        async with session.get('http://localhost:8080/assets/bundle.js') as resp:
-            if resp.status == 200:
-                res = await resp.text()
-                return web.Response(res)
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get('http://localhost:8080/assets/bundle.js') as resp:
+                if resp.status == 200:
+                    res = await resp.text()
+                    return web.Response(res)
+    except:
+        pass
     return web.FileResponse('static/js/bundle.js')
