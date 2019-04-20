@@ -6,14 +6,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && webpack --mode production",
-    "serve": "webpack-dev-server --mode development --inline=false",
-    "watch": "npm-watch"
-  },
-  "watch": {
-    "test": {
-      "patterns": ["src"],
-      "extensions": "js,vue"
-    }
+    "serve": "webpack-dev-server --mode development --inline=false"
   },
   "author": "",
   "license": "MIT",
@@ -24,7 +17,6 @@
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.5.17",
     "vuex": "^3.1.0",
-    "npm-watch": "^0.6.0",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.5",
     "@babel/core": "^7.4.3",
