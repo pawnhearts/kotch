@@ -84,7 +84,7 @@ async def websocket(request):
     schema = MessageSchema()
     if not request.query.get('no_history'):
         for message in request.app.messages:
-            if message['type'] == 'public' or message.get('private_for') == ws.ident:
+            if message['type'] == 'public' or    message.get('private_for') == ws.ident:
                 await ws.send_json(schema.dump_message(message))
 
     async for msg in ws:
@@ -98,3 +98,12 @@ async def websocket(request):
     request.app.clients.remove(ws)
     request.app.clients_by_ident.pop(ws.ident)
     return ws
+
+
+async def bundle(request):
+    async with aiohttp.ClientSession() as session:
+        async with session.get('http://localhost:8080/assets/bundle.js') as resp:
+            if resp.status == 200
+                res = await resp.text()
+                return web.Response(res)
+    return web.FileResponse('static/js/bundle.js')

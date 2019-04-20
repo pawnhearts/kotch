@@ -4,7 +4,7 @@ import weakref
 from aiohttp import web
 
 from .settings import settings, BASE_DIR, THIS_DIR
-from .views import index, post, websocket
+from .views import index, post, websocket, bundle
 from .tasks import start_background_tasks
 
 # import uvloop
@@ -16,6 +16,7 @@ def setup_routes(app):
         web.get('/', index),
         web.post('/post', post),
         web.get('/ws', websocket),
+        web.get('/bundle.js', bundle),
     ])
     app.router.add_static('/static/', path=BASE_DIR / 'static/', name='static')
 
