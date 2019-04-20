@@ -1,6 +1,5 @@
 """
 This file allows your to serve your application using gunicorn. gunicorn is not installed by default
-by the requirements file adev creates, you'll need to install it yourself and add it to requirements.txt.
 
 To run the app using gunicorn, in the terminal run
 
