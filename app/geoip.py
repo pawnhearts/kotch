@@ -4,7 +4,7 @@ from .models import LocationSchema
 from .settings import BASE_DIR
 
 geoip_db = pygeoip.GeoIP(BASE_DIR / 'GeoLiteCity.dat')
-with open('regioncodes.json') as f:
+with open(BASE_DIR / 'regioncodes.json') as f:
     region_names = json.load(f)
 
 
