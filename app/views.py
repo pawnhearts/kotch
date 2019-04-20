@@ -70,7 +70,7 @@ async def post(request):
         await client.send_json(message_json)
 
     request.app.messages.append(message.data)
-    request.app.messages = request.app.messages[-10:]
+    request.app.messages = request.app.messages[-settings.max_messages:]
     return web.json_response(message_json)
 
 

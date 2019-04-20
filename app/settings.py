@@ -35,6 +35,7 @@ class Settings:
     admin_password = '111'
     uploads_path = BASE_DIR / 'static/uploads'
     client_max_size = 40 * 1024 * 1024
+    max_messages = 10
 
     def __init__(self, **custom_settings):
         """
