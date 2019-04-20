@@ -24,5 +24,7 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vue-native-websocket": "^2.0.13"
+  }
 }

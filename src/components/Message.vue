@@ -38,10 +38,10 @@
         props: ['message', 'root'],
         computed: {
             reply_to: function () {
-                if (!this.message.reply_to) return []
-                return this.message.reply_to.map(function (count) {
-                    return chat.messages_by_count[count]
-                }).filter(message => message)
+                if (!this.message.reply_to) return [];
+                return this.message.reply_to.map((count) => {
+                    return this.$store.getters.messages_by_count[count];
+                }).filter(message => message);
             }
         },
         data: function () {
