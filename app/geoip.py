@@ -20,3 +20,14 @@ def get_location(remote_ip):
             'country_name': location['country_name'],
             'region_name': region_names.get('{}-{}'.format(location['country_code'], location.get('region_code', ''))),
         }
+
+
+def get_location_from_country(country, country_name):
+    return {
+        'country': country.split('-')[0],
+        'region': country.split('-')[1] if '-' in country else None,
+        'latitude': None,
+        'longitude': None,
+        'country_name': country_name,
+        'region_name': region_names.get(country),
+    }
