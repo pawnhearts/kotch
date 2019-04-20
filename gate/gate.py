@@ -56,7 +56,7 @@ def on_message(ws, message):
         if data['country']+data['body']+file in ownposts:
             return
         ownposts.append(data['country']+data['body']+file)
-        api.post(data['body'], data['name'], file='tmp/'+file if file else None, country=data['country'])
+        print api.post(data['body'], data['name'], file='tmp/'+file if file else None, country=data['country'])
 
 
 

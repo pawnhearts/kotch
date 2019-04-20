@@ -27,10 +27,11 @@ class LiveChanApi(SocketIO):
         if country:
             data['country'] = country
         files = {'image': (os.path.basename(file), open(file, 'rb'))} if file else {}
-        requests.post(
+        res = requests.post(
             urljoin(self.url, 'chat/{}'.format(self.channel)),
             data=data, files=files, cookies={'password_livechan': self.password}
         )
+        return res.text
 
     def on_chat(self, callback):
         self.on('chat', partial(callback, self))
