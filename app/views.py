@@ -54,7 +54,7 @@ async def post(request):
         'private_for': data.get('private_for'),
         'file': fileobj,
         'location': get_location(remote_ip) if 'country' not in postdata else get_location_from_country(postdata.get('country'), postdata.get('country_name')),
-        'ip': remote_ip if 'ident' not in postdata else postdata['ident'],
+        'ip': remote_ip if 'identifier' not in postdata else postdata['identifier'],
         'reply_to': data.get('reply_to'),
         'type': 'public' if not data.get('private_for') else 'private',
     })
